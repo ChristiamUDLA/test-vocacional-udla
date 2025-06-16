@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Vocacional - UDLA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .intro {
+            background: #f8f9ff;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #fafbff;
+            border-radius: 10px;
+            border: 1px solid #e1e5f7;
+        }
+        
+        .section h3 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 12px;
+            background: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .question-text {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        
+        .options {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover {
+            background: #edf2f7;
+            border-color: #667eea;
+        }
+        
+        .option.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: block;
+            margin: 30px auto;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .results {
+            display: none;
+            padding: 30px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .results h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .career-recommendation {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .progress-container {
+            background: #e2e8f0;
+            border-radius: 10px;
+            padding: 4px;
+            margin: 10px 0;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .engineering-bar {
+            background: linear-gradient(90deg, #4CAF50, #2196F3);
+        }
+        
+        .music-bar {
+            background: linear-gradient(90deg, #FF9800, #E91E63);
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎵 Test Vocacional UDLA 🔬</h1>
+            <p>Descubre tu afinidad con Ingeniería en Sonido y Acústica vs. Licenciatura en Música</p>
+        </div>
+        
+        <div class="content">
+            <div class="intro">
+                <h2>🎯 Bienvenido al Test Vocacional Especializado</h2>
+                <p>Este test científicamente diseñado evalúa tus aptitudes, intereses y valores para determinar tu afinidad con nuestras dos excepcionales carreras en la Universidad de las Américas:</p>
+                <ul style="margin: 15px 0 0 20px;">
+                    <li><strong>Ingeniería en Sonido y Acústica</strong> - Única en Ecuador, fusiona física, tecnología y música</li>
+                    <li><strong>Licenciatura en Música (Artes Musicales)</strong> - Formación integral con certificación LAMA</li>
+                </ul>
+            </div>
+            
+            <div class="instructions">
+                <strong>📋 Instrucciones:</strong> Responde con total honestidad. No hay respuestas correctas o incorrectas. El test toma aproximadamente 8-10 minutos y evaluará múltiples dimensiones de tu perfil vocacional.
+            </div>
+            
+            <form id="vocationalTest">
+                <!-- Sección 1: Aptitudes Cognitivas -->
+                <div class="section">
+                    <h3><span class="section-icon">🧠</span>Aptitudes Cognitivas y Académicas</h3>
+                    
+                    <div class="question">
+                        <div class="question-text">1. ¿Cuál es tu relación con las matemáticas y la física?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q1" value="engineering" data-weight="3">
+                                Me apasionan, disfruto resolviendo ecuaciones complejas y entendiendo fenómenos físicos
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1" value="engineering" data-weight="2">
+                                Me gustan y se me facilitan, especialmente cuando tienen aplicaciones prácticas
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1" value="neutral" data-weight="1">
+                                Las tolero cuando son necesarias, pero no son mi fuerte
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1" value="music" data-weight="1">
+                                Las encuentro difíciles y prefiero enfocarme en otras áreas
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text">2. Al escuchar música, ¿en qué te enfocas principalmente?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q2" value="music" data-weight="2">
+                                En la melodía, armonía, estructura musical y expresión artística
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2" value="engineering" data-weight="4">
+                                En la calidad técnica del sonido, espacialización, frecuencias y producción
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2" value="music" data-weight="2">
+                                En la interpretación y el mensaje emocional del artista
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2" value="engineering" data-weight="2">
+                                En cómo la tecnología puede mejorar la experiencia musical
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text">3. ¿Cómo prefieres abordar la resolución de problemas?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q3" value="engineering" data-weight="3">
+                                Mediante análisis sistemático, datos cuantitativos y metodología científica
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3" value="music" data-weight="3">
+                                A través de la intuición, creatividad y exploración artística
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3" value="engineering" data-weight="2">
+                                Combinando lógica con experimentación práctica
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3" value="music" data-weight="2">
+                                Mediante colaboración creativa y inspiración colectiva
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sección 2: Intereses Profesionales -->
+                <div class="section">
+                    <h3><span class="section-icon">⚡</span>Intereses y Motivaciones Profesionales</h3>
+                    
+                    <div class="question">
+                        <div class="question-text">4. ¿Qué tipo de proyecto te emocionaría más realizar?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q4" value="engineering" data-weight="3">
+                                Diseñar la acústica de un teatro o centro de convenciones
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4" value="music" data-weight="3">
+                                Componer y producir un álbum musical original
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4" value="engineering" data-weight="2">
+                                Desarrollar tecnología para reducir la contaminación acústica
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4" value="music" data-weight="2">
+                                Organizar un festival musical o dirigir una orquesta
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text">5. ¿En qué entorno laboral te ves trabajando?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q5" value="engineering" data-weight="3">
+                                Laboratorios de acústica, estudios de grabación con enfoque técnico, consultorías
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5" value="music" data-weight="3">
+                                Estudios musicales, escenarios, conservatorios, industria del entretenimiento
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5" value="engineering" data-weight="2">
+                                Empresas de tecnología audiovisual o firmas de arquitectura acústica
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5" value="music" data-weight="2">
+                                Medios de comunicación, productoras audiovisuales, educación musical
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text">6. ¿Qué aspecto del sonido te resulta más fascinante?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q6" value="engineering" data-weight="4">
+                                Cómo se propagan las ondas sonoras y su comportamiento físico
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6" value="music" data-weight="2">
+                                Su capacidad de transmitir emociones y crear experiencias artísticas
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6" value="engineering" data-weight="3">
+                                Las aplicaciones tecnológicas para mejorar la calidad auditiva
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6" value="engineering" data-weight="2">
+                                Su potencial para resolver problemas reales de la sociedad
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sección 3: Habilidades Técnicas -->
+                <div class="section">
+                    <h3><span class="section-icon">🔧</span>Habilidades y Competencias Técnicas</h3>
+                    
+                    <div class="question">
+                        <div class="question-text">7. ¿Cómo es tu relación con la tecnología y programación?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q7" value="engineering" data-weight="3">
+                                Me fascina programar, automatizar procesos y usar software especializado
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7" value="engineering" data-weight="2">
+                                La veo como una herramienta útil que estoy dispuesto/a a aprender
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7" value="music" data-weight="2">
+                                Prefiero usarla de manera creativa para producción musical
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7" value="music" data-weight="1">
+                                No me atrae mucho, prefiero enfocarme en aspectos más artísticos
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text">8. ¿Qué tipo de instrumento musical prefieres o te llama más la atención?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q8" value="music" data-weight="2">
+                                Instrumentos acústicos tradicionales (piano, guitarra, violín, etc.)
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8" value="engineering" data-weight="4">
+                                Sintetizadores, instrumentos electrónicos y software musical
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8" value="music" data-weight="2">
+                                La voz humana y técnicas vocales
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8" value="engineering" data-weight="3">
+                                Sistemas de audio profesional y tecnología de sonido
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text">9. Al trabajar en equipo, ¿qué rol prefieres asumir?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q9" value="engineering" data-weight="3">
+                                El analista técnico que resuelve problemas complejos
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9" value="music" data-weight="3">
+                                El creativo que aporta ideas innovadoras y artísticas
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9" value="engineering" data-weight="2">
+                                El coordinador que gestiona proyectos y recursos
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9" value="music" data-weight="2">
+                                El comunicador que conecta al equipo e inspira
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sección 4: Valores y Visión -->
+                <div class="section">
+                    <h3><span class="section-icon">🎯</span>Valores y Visión Profesional</h3>
+                    
+                    <div class="question">
+                        <div class="question-text">10. ¿Qué tipo de impacto te gustaría tener en la sociedad?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q10" value="engineering" data-weight="3">
+                                Mejorar la calidad de vida mediante soluciones acústicas innovadoras
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10" value="music" data-weight="3">
+                                Enriquecer la cultura y transmitir emociones a través de la música
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10" value="engineering" data-weight="2">
+                                Contribuir al desarrollo tecnológico del país
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10" value="music" data-weight="2">
+                                Educar y formar nuevas generaciones de artistas
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text">11. ¿Cómo defines el éxito profesional?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q11" value="engineering" data-weight="3">
+                                Resolver problemas complejos y generar innovación tecnológica
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11" value="music" data-weight="3">
+                                Crear arte que trascienda y conecte con las personas
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11" value="engineering" data-weight="2">
+                                Liderar proyectos multidisciplinarios de gran impacto
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11" value="music" data-weight="2">
+                                Inspirar y colaborar con otros artistas a nivel internacional
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text">12. ¿Qué te motiva más en un proyecto desafiante?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q12" value="engineering" data-weight="3">
+                                La precisión técnica y la optimización de resultados medibles
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12" value="music" data-weight="3">
+                                La libertad creativa y la posibilidad de experimentar artísticamente
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12" value="engineering" data-weight="2">
+                                La aplicación práctica de conocimientos científicos
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12" value="music" data-weight="2">
+                                La colaboración artística y el intercambio cultural
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sección 5: Situaciones Prácticas -->
+                <div class="section">
+                    <h3><span class="section-icon">🎭</span>Situaciones y Preferencias Prácticas</h3>
+                    
+                    <div class="question">
+                        <div class="question-text">13. Si tuvieras que elegir un curso electivo, ¿cuál te interesaría más?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q13" value="engineering" data-weight="3">
+                                "Acústica Arquitectónica y Simulación Computacional"
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q13" value="music" data-weight="3">
+                                "Composición Musical y Arreglos Contemporáneos"
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q13" value="engineering" data-weight="2">
+                                "Instrumentación y Medición de Sonido"
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q13" value="music" data-weight="2">
+                                "Historia y Análisis de Géneros Musicales"
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text">14. En tu tiempo libre, ¿qué actividad disfrutas más?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q14" value="engineering" data-weight="3">
+                                Experimentos científicos, análisis de datos, proyectos técnicos
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q14" value="music" data-weight="3">
+                                Tocar instrumentos, asistir a conciertos, crear música
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q14" value="engineering" data-weight="2">
+                                Investigar nuevas tecnologías, leer papers científicos
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q14" value="music" data-weight="2">
+                                Explorar diferentes culturas musicales y artísticas
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text">15. ¿Cuál consideras tu mayor fortaleza?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q15" value="engineering" data-weight="3">
+                                Pensamiento analítico y capacidad de abstracción matemática
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q15" value="music" data-weight="3">
+                                Sensibilidad artística y capacidad de expresión creativa
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q15" value="engineering" data-weight="2">
+                                Persistencia para resolver problemas complejos
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q15" value="music" data-weight="2">
+                                Habilidad para conectar emocionalmente con otros
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn" onclick="calculateResults()">
+                    🎯 Obtener Resultados del Test
+                </button>
+            </form>
+            
+            <div id="results" class="results">
+                <h3>📊 Tus Resultados Vocacionales</h3>
+                <div id="resultsContent"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Función para manejar la selección de opciones
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                // Limpiar selecciones previas en la misma pregunta
+                const questionName = radio.name;
+                document.querySelectorAll(`input[name="${questionName}"]`).forEach(input => {
+                    input.closest('.option').classList.remove('selected');
+                });
+                
+                // Marcar la opción actual como seleccionada
+                this.classList.add('selected');
+            });
+        });
+        
+        function calculateResults() {
+            const form = document.getElementById('vocationalTest');
+            const formData = new FormData(form);
+            
+            let engineeringScore = 0;
+            let musicScore = 0;
+            let totalQuestions = 15;
+            let answeredQuestions = 0;
+            
+            // Verificar que todas las preguntas estén respondidas
+            for (let i = 1; i <= totalQuestions; i++) {
+                const answer = formData.get(`q${i}`);
+                if (answer) {
+                    answeredQuestions++;
+                    const input = document.querySelector(`input[name="q${i}"]:checked`);
+                    const weight = parseInt(input.getAttribute('data-weight'));
+                    
+                    if (answer === 'engineering') {
+                        engineeringScore += weight;
+                    } else if (answer === 'music') {
+                        musicScore += weight;
+                    }
+                }
+            }
+            
+            if (answeredQuestions < totalQuestions) {
+                alert(`Por favor responde todas las preguntas. Te faltan ${totalQuestions - answeredQuestions} preguntas.`);
+                return;
+            }
+            
+            // Calcular porcentajes
+            const totalScore = engineeringScore + musicScore;
+            const engineeringPercentage = Math.round((engineeringScore / totalScore) * 100);
+            const musicPercentage = Math.round((musicScore / totalScore) * 100);
+            
+            // Determinar recomendación
+            let recommendation = '';
+            let primaryCareer = '';
+            let secondaryCareer = '';
+            
+            if (engineeringScore > musicScore) {
+                primaryCareer = 'Ingeniería en Sonido y Acústica';
+                secondaryCareer = 'Licenciatura en Música';
+                if (engineeringPercentage >= 65) {
+                    recommendation = '🚀 <strong>¡Perfil excepcional para Ingeniería!</strong> Tus respuestas revelan una mentalidad innovadora perfecta para la ÚNICA carrera de Ingeniería en Sonido y Acústica del Ecuador. Tu combinación de pensamiento analítico y pasión por la tecnología te posiciona para liderar la revolución acústica en nuestro país.';
+                } else if (engineeringPercentage >= 55) {
+                    recommendation = '⭐ <strong>¡Excelente potencial ingenieril!</strong> Tienes las bases fundamentales para destacar en Ingeniería en Sonido y Acústica. Esta carrera de vanguardia te permitirá desarrollar tu lado técnico mientras trabajas con lo que amas: el sonido. La UDLA te brindará todas las herramientas para potenciar tu talento.';
+                } else {
+                    recommendation = '🔬 <strong>Potencial técnico prometedor</strong> para Ingeniería en Sonido y Acústica. Tu perfil muestra características que, con el desarrollo adecuado, pueden convertirte en un profesional exitoso en esta campo único. La carrera te ayudará a fortalecer tus habilidades analíticas mientras exploras tu pasión por el sonido.';
+                }
+            } else if (musicScore > engineeringScore) {
+                primaryCareer = 'Licenciatura en Música';
+                secondaryCareer = 'Ingeniería en Sonido y Acústica';
+                if (musicPercentage >= 70) {
+                    recommendation = '🎵 <strong>Vocación artística clara!</strong> Tienes una fuerte inclinación hacia la Licenciatura en Música. Tu sensibilidad artística es notable, aunque también podrías considerar cómo la tecnología puede potenciar tu arte - algo que exploramos en nuestros programas interdisciplinarios.';
+                } else if (musicPercentage >= 60) {
+                    recommendation = '🎶 <strong>Talento musical evidente</strong> con potencial para Licenciatura en Música. Interesante notar que también muestras afinidad por aspectos técnicos. ¿Sabías que muchos de nuestros estudiantes de música colaboran estrechamente con los de Ingeniería en Sonido? Las oportunidades de sinergia son infinitas.';
+                } else {
+                    recommendation = '🎨 <strong>Inclinación artística</strong> hacia Licenciatura en Música. Tu perfil sugiere que podrías beneficiarte explorando también el lado técnico de la música. En la UDLA, nuestras dos carreras trabajan juntas en proyectos fascinantes que combinan arte y ciencia.';
+                }
+            } else {
+                recommendation = '💡 <strong>¡Perfil interdisciplinario excepcional!</strong> Tu equilibrio entre lo técnico y lo artístico es exactamente lo que busca la industria moderna. Considera especialmente Ingeniería en Sonido y Acústica, donde podrás aplicar tanto tu sensibilidad musical como tu capacidad analítica. Es la síntesis perfecta de ambos mundos.';
+                primaryCareer = 'Ingeniería en Sonido y Acústica (recomendación especial)';
+                secondaryCareer = 'Licenciatura en Música';
+            }
+            
+            // Mostrar resultados
+            const resultsContent = document.getElementById('resultsContent');
+            resultsContent.innerHTML = `
+                <div class="career-recommendation">
+                    <h4>🎯 Recomendación Principal</h4>
+                    <p>${recommendation}</p>
+                </div>
+                
+                <div class="career-recommendation">
+                    <h4>📊 Análisis Detallado</h4>
+                    <div style="margin: 15px 0;">
+                        <strong>🔬 Ingeniería en Sonido y Acústica: ${engineeringPercentage}%</strong>
+                        <div class="progress-container">
+                            <div class="progress-bar engineering-bar" style="width: ${engineeringPercentage}%">
+                                ${engineeringPercentage}%
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <strong>🎵 Licenciatura en Música: ${musicPercentage}%</strong>
+                        <div class="progress-container">
+                            <div class="progress-bar music-bar" style="width: ${musicPercentage}%">
+                                ${musicPercentage}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="career-recommendation">
+                    <h4>🎓 Próximos Pasos Recomendados</h4>
+                    <ul style="margin-left: 20px; line-height: 1.6;">
+                        <li><strong>Visita prioritaria</strong> - Conoce los laboratorios de acústica únicos en Ecuador en UDLA Park</li>
+                        <li><strong>Conversa con pioneros</strong> - Habla con estudiantes de Ingeniería en Sonido, los primeros de esta carrera en el país</li>
+                        <li><strong>Eventos exclusivos</strong> - Asiste a conferencias del capítulo AES UDLA con expertos internacionales</li>
+                        <li><strong>Revisa proyectos reales</strong> - Conoce los casos de éxito en udla.edu.ec/sonido-acustica</li>
+                        <li><strong>Oportunidades futuras</strong> - Explora las pasantías en empresas líderes y proyectos de investigación</li>
+                        <li><strong>Experiencia inmersiva</strong> - Solicita una clase demo en nuestros laboratorios especializados</li>
+                    </ul>
+                    <p style="margin-top: 15px; font-style: italic; color: #667eea;"><strong>💡 Tip especial:</strong> La demanda de ingenieros en sonido y acústica crece 300% más rápido que otras ingenierías. ¡Es el momento perfecto para ser pionero!</p>
+                </div>
+                
+                <div class="career-recommendation">
+                    <h4>💡 ¿Sabías que...?</h4>
+                    <p><strong>🚀 Ingeniería en Sonido y Acústica</strong> es la ÚNICA carrera de este tipo en Ecuador y una de las pocas en Latinoamérica. Con profesores especializados en el exterior, tecnología de última generación y convenios internacionales exclusivos. Los graduados tienen un 95% de empleabilidad y trabajan en proyectos de vanguardia: desde el diseño acústico del nuevo aeropuerto de Quito hasta estudios de grabación de artistas internacionales. Miembros de AES (Audio Engineering Society) con acceso directo a la industria global.</p>
+                    <p><strong>🎵 Licenciatura en Música</strong> tiene certificación LAMA y posibilidad de doble titulación estudiando en Los Ángeles. Incluye 30 clubes estudiantiles sin costo y convenios con teatros reconocidos. Muchos graduados colaboran exitosamente con nuestros ingenieros en sonido en proyectos interdisciplinarios innovadores.</p>
+                </div>
+                
+                <div class="career-recommendation">
+                    <h4>🌟 Oportunidades Exclusivas en Ingeniería en Sonido y Acústica</h4>
+                    <ul style="margin-left: 20px; line-height: 1.6;">
+                        <li><strong>Único programa en Ecuador</strong> - Sin competencia directa en el mercado laboral</li>
+                        <li><strong>Tecnología AVID</strong> - Acceso exclusivo como AVID Learning Partner</li>
+                        <li><strong>Proyectos reales</strong> - Participación en obras de infraestructura nacional</li>
+                        <li><strong>Network internacional</strong> - Capítulo AES UDLA con conexiones globales</li>
+                        <li><strong>Investigación de punta</strong> - Publicaciones en congresos internacionales</li>
+                        <li><strong>Multidisciplinario</strong> - Aplicable en arquitectura, medicina, entretenimiento, tecnología</li>
+                        <li><strong>Futuro prometedor</strong> - Campo en crecimiento exponencial con IA y realidad virtual</li>
+                    </ul>
+                </div>
+            `;
+            
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
